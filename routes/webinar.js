@@ -48,7 +48,7 @@ router.post('/add', adminAuth, async (req, res) => {
 });
 
 // Get all webinars
-router.get('/', adminAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const webinars = await Webinar.find().sort({ date: 1, startTime: 1 });
     res.json({ success: true, data: webinars });
