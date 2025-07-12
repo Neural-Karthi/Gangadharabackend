@@ -37,7 +37,7 @@ router.post('/create', async (req, res) => {
         data: {
           orderId,
           registrationId: demoRegistrationId,
-          razorpayKeyId: 'rzp_test_demo',
+          razorpayKeyId: 'rzp_live_Q9bJNJ9FrECD1v',
           amount,
           courseName: selectedCourse.name
         },
@@ -63,20 +63,14 @@ router.post('/create', async (req, res) => {
     const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET;
 
     // Check if Razorpay credentials are available
-    if (!razorpayKeyId || !razorpayKeySecret) {
-      console.log('Razorpay credentials not found, using demo mode');
-      return res.json({
-        success: true,
-        data: {
-          orderId: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          registrationId: registration._id,
-          razorpayKeyId: 'rzp_test_demo',
-          amount,
-          courseName: selectedCourse.name
-        },
-        message: 'Demo mode - Razorpay credentials not configured'
-      });
-    }
+if (!razorpayKeyId || !razorpayKeySecret) {
+  return res.json({
+    success: false,
+    error: 'Razorpay credentials not configured. Check your .env file.'
+  });
+}
+
+
 
     const razorpay = new Razorpay({
       key_id: razorpayKeyId,
@@ -106,7 +100,7 @@ router.post('/create', async (req, res) => {
         data: {
           orderId: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           registrationId: registration._id,
-          razorpayKeyId: 'rzp_test_demo',
+          razorpayKeyId: 'rzp_live_Q9bJNJ9FrECD1v',
           amount,
           courseName: selectedCourse.name
         },
